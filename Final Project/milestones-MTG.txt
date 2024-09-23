@@ -8,7 +8,7 @@ that is inspired from a classical style arcade game. The game in question is
 tetris, mainly due to its blocking and scoring methods that will be suitible
 for the requirements of this project.
 
-MTG's To do (2 partners):
+MTG's To do:
 	-Research Tetris Mechanics ~1hr
 	-Get acquainted with the library nCurses ~3hrs
 	-Game Flow design ~4hrs 
