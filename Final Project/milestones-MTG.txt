@@ -1,4 +1,4 @@
-Git link: https://github.com/ItsTubbles/CS302/tree/main/Final%20Project
+Git link: https://github.com/ItsTubbles/FinalProject/tree/main/Final%20Project
 compile: g++ -o ncurses Main.cpp -lncurses
 run: ./ncurses
 
