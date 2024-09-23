@@ -8,18 +8,18 @@ that is inspired from a classical style arcade game. The game in question is
 tetris, mainly due to its blocking and scoring methods that will be suitible
 for the requirements of this project.
 
-To do (2 partners):
-	-Research Tetris Mechanics ~1hr each
-	-Get acquainted with the library nCurses ~3hrs each 
-	-Game Flow design ~4hrs each
-	-Rubric generation ~1hr each
-	-Ceate milestones doc ~1hr each
-	-Setup Repository ~2hrs each
-	-Generate psuedo code for the separate files ~1hr each
+MTG's To do:
+	-Research Tetris Mechanics ~1hr
+	-Get acquainted with the library nCurses ~3hrs  
+	-Game Flow design ~4hrs
+	-Rubric generation ~1hr
+	-Ceate milestones doc ~1hr
+	-Setup Repository ~2hrs 
+	-Generate psuedo code for the separate files ~1hr
 	-split header file function definitions and main between partners
-	-create the game ~15hr each
-	-test the game ~1hr each
-	-debug and optimize ~5hr each
+	-create the game ~15hr 
+	-test the game ~1hr 
+	-debug and optimize ~5hr 
 
 (Initials)'s Rubric: 
 	
