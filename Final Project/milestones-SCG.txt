@@ -1,0 +1,37 @@
+Git link: https://github.com/ItsTubbles/FinalProject/tree/main/Final%20Project
+compile: g++ -o ncurses Main.cpp -lncurses
+run: ./ncurses
+
+Project intent: 
+	The intent of the following project is to create a console based game
+that is inspired from a classical style arcade game. The game in question is
+tetris, mainly due to its blocking and scoring methods that will be suitible
+for the requirements of this project.
+
+SCG's To do:
+	- Research Tetris Mechanics ~ 2hr
+	- Get acquainted with Github ~ 1hr
+	- Get acquainted with nCurses library ~ 4hr
+	- Game Flow Design ~ 4hr
+	- Create the Game ~ 15hr
+	- Test Gane ~ 1hr
+	- Debug and Optimize ~ 5hr
+ 
+
+SCG's Rubric: 
+	12 points for time spent
+	08 points for repo
+	10 points for code working as intended
+	10 points for documentation
+	
+
+SCG's Personal Log:
+	3hr getting acquainted with nCurses library 
+	1hr generating this file 
+	1hr familiarization with Github
+	
+
+SCG's Summary:
+	Challenge05 was used to plan and strategize for the final project, including choosing the idea to implement, research the idea, and find resources to make the idea into a reality. 
+	We have decided this project will take the sufficient time to finish, and the usage of the nCurses library will provide enough of a challenge to make the project well suited as our final project. 
+	
