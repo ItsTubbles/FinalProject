@@ -26,7 +26,7 @@ SCG's Rubric:
 	
 
 SCG's Personal Log:
-	3hr getting acquainted with nCurses library 
+	4hr getting acquainted with nCurses library 
 	1hr generating this file 
 	1hr familiarization with Github
 	
