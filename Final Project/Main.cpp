@@ -3,79 +3,15 @@
 #include <cstdlib>  // For rand() and srand()
 #include <ctime>    // For time() to seed rand()
 #include <unistd.h> // For usleep (to control fall speed)
-#include "Pieces.h" // Include your pieces header file
-
-const int boardRows = 20;
-const int boardCols = 10;
-
-void drawBox() {
-    // Draw the top of the box
-    mvprintw(0, 0, "+");
-    for (int i = 0; i < boardCols; i++) {
-        printw("---");
-    }
-    printw("+");
-
-    // Draw the sides of the box
-    for (int i = 1; i <= boardRows; ++i) {
-        mvprintw(i, 0, "|");                   // Left side
-        mvprintw(i, boardCols * 3 + 1, "|");   // Right side (adjusting for 3 spaces per column)
-    }
-
-    // Draw the bottom of the box
-    mvprintw(boardRows + 1, 0, "+");
-    for (int i = 0; i < boardCols; i++) {
-        printw("---");
-    }
-    printw("+");
-}
-
-void printBoard(char board[boardRows][boardCols]) {
-    for (int i = 0; i < boardRows; i++) {
-        for (int j = 0; j < boardCols; j++) {
-            mvprintw(i + 1, j * 3 + 1, "%c", board[i][j]);  // Adjust for space between columns
-        }
-    }
-}
-
-void placeTetrominoOnBoard(char board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int row, int col) {
-    for (int i = 0; i < tetroRows; i++) {
-        for (int j = 0; j < tetroCols; j++) {
-            if (tetromino[i][j] != ' ') {
-                board[row + i][col + j] = tetromino[i][j];
-            }
-        }
-    }
-}
-
-void clearTetrominoFromBoard(char board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int row, int col) {
-    for (int i = 0; i < tetroRows; i++) {
-        for (int j = 0; j < tetroCols; j++) {
-            if (tetromino[i][j] != ' ') {
-                board[row + i][col + j] = '.';
-            }
-        }
-    }
-}
-
-// Template to convert any Tetromino array into a pointer-to-pointer
-template <size_t rows, size_t cols>
-char** convertToPointer(char (&tetromino)[rows][cols]) {
-    char** result = new char*[rows];
-    for (size_t i = 0; i < rows; ++i) {
-        result[i] = new char[cols];
-        for (size_t j = 0; j < cols; ++j) {
-            result[i][j] = tetromino[i][j];
-        }
-    }
-    return result;
-}
+#include "Tetris.h" // Utility board functions
+#include "Pieces.h" // Pieces and piece function
 
 int main() {
     initscr();             // Start ncurses mode
     noecho();              // Do not echo user input
     curs_set(0);           // Hide the cursor
     srand(time(0));        // Seed random number generator
+    nodelay(stdscr, TRUE); // Make getch() non-blocking
 
     char board[boardRows][boardCols];
 
@@ -86,8 +22,14 @@ int main() {
         }
     }
 
+    // Print command instructions above the board
+    mvprintw(0, 0, "             TETRIS!                  ");
+    mvprintw(1, 0, "w=set      s=down    Shift+a=rotate left");
+    mvprintw(2, 0, "a=left    d=right    Shift+D=rotate right");
+    refresh();
+
     // Randomly select a piece
-    char **tetromino;
+    char** tetromino;
     int tetroRows, tetroCols;
 
     int randomPiece = rand() % 7; // 7 possible Tetrominoes
@@ -101,12 +43,16 @@ int main() {
         case 6: tetromino = convertToPointer(L_0); tetroRows = 2; tetroCols = 3; break;
     }
 
-    int currentRow = 0;
-    int columnStart = 3;  // Starting column position
+    int currentRow = 4 - tetroCols;
+    int columnStart = boardCols/2 - tetroCols/2;  // Starting column position
 
     // Falling loop
     while (currentRow + tetroRows < boardRows) {
         clear();  // Clear the screen
+
+        mvprintw(0, 0, "             TETRIS!                  ");
+        mvprintw(1, 0, "w=set      s=down    Shift+a=rotate left");
+        mvprintw(2, 0, "a=left    d=right    Shift+D=rotate right");
 
         // Draw the box around the board
         drawBox();
@@ -124,13 +70,27 @@ int main() {
         printBoard(board);
         refresh();  // Refresh the screen to show the updated board
 
-        usleep(200000);  // Sleep for 200 milliseconds (controls the fall speed)
+        usleep(400000);  // Sleep for 200 milliseconds (controls the fall speed)
+
+        int ch = getch();  // Check for user input
+        if (ch != ERR) {   // If there's user input
+            if (ch == 'W') {   // Check if Shift + W is pressed
+                break;         // Exit the loop to quit the program
+            }
+        }
     }
 
-    // Keep the final board displayed
-    getch(); // Wait for user input before exiting
+    nodelay(stdscr, FALSE);  // Disable non-blocking input, return to normal blocking mode
+    move(14, 3); 
+    printw("Press 'shift+Set' to quit");
+    refresh();
+    
+    int ch;
+    while ((ch = getch()) != 'W') {
+        // Wait for 'W' to quit
+    }
 
-    endwin();              // End ncurses mode
+    endwin();// End ncurses mode
     return 0;
 }
 
