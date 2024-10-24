@@ -38,4 +38,4 @@ future of this project. The time here was used to get a basis for whether the
 project can be finished in time, if it is too easy, or if its too hard. Given
 the potential learning curve on ncurses, I believe this project is well suited
 for the final project and will meet all the criteria. We also used this time
-to get a small understanding of ncurses and how it works. 
+to get a small understanding of ncurses and how it works.
