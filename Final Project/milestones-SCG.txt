@@ -16,6 +16,7 @@ SCG's To do:
 	- Create the Game ~ 15hr
 	- Test Gane ~ 1hr
 	- Debug and Optimize ~ 5hr
+	- Implement movement of the piece with WASD ~ 3 hrs
  
 
 SCG's Rubric: 
