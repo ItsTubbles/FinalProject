@@ -28,9 +28,13 @@ MTG's Rubric:
 	10 points for documentation
 
 MTG's Personal Log:
-	02hr generating this file (50% in lab)
+	02hr generating project proposal file (50% in lab)
 	02hr familiarization with ncurses
 	01hr Generating potential header files, supporting files, and main
+	01hr Generating MTG's Update1.txt file
+	01hr Adding a file to hold all the defined pieces
+	03hr Adding a board that shows a piece falling and end game (parital Tetris functionality) (also kinda temp)
+	02hr figuring out the best way to get my defined pieces to translate well with the Tetris board(might need alterations)
 
 MTG's Summary:
 	Challenge05 was a thought expirament used to plan and strategize the 

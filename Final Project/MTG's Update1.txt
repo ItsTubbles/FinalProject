@@ -1,0 +1,14 @@
+So far this project hasn't been too challenging, but I see something that could be challenging coming up in my near furture. For now, I just wanted to get 
+something that looked similar to Tetris. I have added a board, and pieces that will randomly spawn, no real functionality yet. The board is set up with a 
+20x10 grid, but I plan to add 4 more rows at the top to give the pieces a scrolling in effect instead of just spawning in. The pieces take a little less
+than a half of a second to fall to the bottom and for now the game ends. I have not done anything with disjoint sets yet (as part of the proposed plan , but 
+the plan is to have them join a set by row, which will hopefully help with a score multiplier.
+
+MTG's Personal Log:
+	02hr generating project proposal file (50% in lab)
+	02hr familiarization with ncurses
+	01hr Generating potential header files, supporting files, and main
+	01hr Generating MTG's Update1.txt file
+	01hr Adding a file to hold all the defined pieces
+	03hr Adding a board that shows a piece falling and end game (parital Tetris functionality) (also kinda temp)
+	02hr figuring out the best way to get my defined pieces to translate well with the Tetris board(might need alterations)
