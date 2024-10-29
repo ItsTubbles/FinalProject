@@ -30,7 +30,7 @@ SCG's Personal Log:
 	4hr getting acquainted with nCurses library 
 	1hr generating this file 
 	1hr familiarization with Github
-	3hr implementation of directional movement.
+	4hr implementation of directional movement.
 	
 
 SCG's Summary:
