@@ -16,7 +16,7 @@ SCG's To do:
 	- Create the Game ~ 15hr
 	- Test Gane ~ 1hr
 	- Debug and Optimize ~ 5hr
-	- Implement movement of the piece with WASD ~ 3 hrs
+	- Implement movement of the piece with WASD/arrow keys ~ 3 hrs
  
 
 SCG's Rubric: 
@@ -30,6 +30,7 @@ SCG's Personal Log:
 	4hr getting acquainted with nCurses library 
 	1hr generating this file 
 	1hr familiarization with Github
+	3hr implementation of directional movement.
 	
 
 SCG's Summary:
