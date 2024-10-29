@@ -1,2 +1,9 @@
 So far, I have not had as much time as I would like to spend on this, but I have been able to make progress. Currently, I have implemented movement of the active piece using the specificied keys.
 I met with my partner and he is working on the structure of the game board and the individual pieces themselves.
+
+
+SCG's Personal Log:
+	4hr getting acquainted with nCurses library 
+	1hr generating this file 
+	1hr familiarization with Github
+	4hr implementation of directional movement
