@@ -2,6 +2,7 @@
 #define TETRIS_H
 
 #include <ncurses.h>
+#include <cstdlib>
 
 // Declare board dimensions
 const int boardRows = 24;  // 20 visible rows + 4 extra rows off the top
@@ -9,9 +10,11 @@ const int boardCols = 10;
 
 // Function declarations
 void drawBox();
-void printBoard(char board[boardRows][boardCols]);
+void printBoard(char board[boardRows][boardCols], int colorPair);
 void placeTetrominoOnBoard(char board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int row, int col);
 void clearTetrominoFromBoard(char board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int row, int col);
+void printTetrisTitle();
+bool canMoveDown(char board[boardRows][boardCols], char** tetromino, int tetroRows, int tetroCols, int currentRow, int columnStart);
 
 // Template to convert any Tetromino array into a pointer-to-pointer
 template <size_t rows, size_t cols>

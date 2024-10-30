@@ -5,17 +5,6 @@
 #include <iostream>
 using namespace std;
 
-template<size_t rows, size_t cols>
-void printTetromino(char (&tetromino)[rows][cols]) {
-    for (size_t i = 0; i < rows; i++) {
-        for (size_t j = 0; j < cols; j++) {
-            printf("%c ", tetromino[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
 // Tetromino 'I'
 char I_0[1][4] = {
     {'X', 'X', 'X', 'X'}
@@ -128,6 +117,17 @@ char L_270[3][2] = {
 };
 
 #endif // TETROMINO_H
+
+// template<size_t rows, size_t cols>
+// void printTetromino(char (&tetromino)[rows][cols]) {
+//     for (size_t i = 0; i < rows; i++) {
+//         for (size_t j = 0; j < cols; j++) {
+//             printf("%c ", tetromino[i][j]);
+//         }
+//         printf("\n");
+//     }
+//     printf("\n");
+// }
 
 //// Printing the Tetrominoes and their rotations (for copying)
 
