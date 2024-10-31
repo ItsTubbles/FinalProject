@@ -4,7 +4,7 @@ LIBS = -lncurses
 SHELL = bash
 
 # Source files
-SRC = Main.cpp Tetris.cpp
+SRC = Main.cpp Tetris.cpp Pieces.cpp
 
 # Output binary
 TARGET = tetris
