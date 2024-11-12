@@ -188,7 +188,6 @@ void quitGame() {
     endwin();  // End ncurses mode
     exit(0);   // Exit the program cleanly
 }
-
 // Define the rotations map explicitly
 map<int, vector<char**>> rotations = {
     {1, {convertToPointer(I_0), convertToPointer(I_90)}},
@@ -201,11 +200,19 @@ map<int, vector<char**>> rotations = {
 
 // Define movement and rotation actions using lambda functions with explicit types
 function<void()> moveLeft = [&]() {
-    if (columnStart > 0) columnStart--;
+    if (canPlaceTetromino(board, tetromino, tetroRows, tetroCols, currentRow, columnStart - 1)) {
+        clearTetrominoFromBoard(board, tetromino, tetroRows, tetroCols, currentRow, columnStart);
+        columnStart--;
+        placeTetrominoOnBoard(board, tetromino, tetroRows, tetroCols, currentRow, columnStart, colorPair);
+    }
 };
 
 function<void()> moveRight = [&]() {
-    if (columnStart + tetroCols < boardCols) columnStart++;
+    if (canPlaceTetromino(board, tetromino, tetroRows, tetroCols, currentRow, columnStart + 1)) {
+        clearTetrominoFromBoard(board, tetromino, tetroRows, tetroCols, currentRow, columnStart);
+        columnStart++;
+        placeTetrominoOnBoard(board, tetromino, tetroRows, tetroCols, currentRow, columnStart, colorPair);
+    }
 };
 
 function<void()> moveDown = [&]() {
