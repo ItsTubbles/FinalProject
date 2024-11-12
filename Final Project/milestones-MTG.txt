@@ -32,9 +32,16 @@ MTG's Personal Log:
 	02hr familiarization with ncurses
 	01hr Generating potential header files, supporting files, and main
 	01hr Generating MTG's Update1.txt file
+	01hr Generating MTG's Update2.txt file
 	01hr Adding a file to hold all the defined pieces
-	03hr Adding a board that shows a piece falling and end game (parital Tetris functionality) (also kinda temp)
+	01hr Separating pieces into .c/.h file to make addreability easier
+	03hr Adding a board that shows a piece falling and end game (parital Tetris functionality) (also kinda was temp)
+	06hr Added 4 more hidden rows to the top of the board to give a scrolling inn effect
+	02hr Figuring out colors in ncurses
+	12hr Adding color changing and fixing the timing for the Tetris logo(bc moving the piece down was making the tetris run at differnt speeds), 
+		fixing piece being a specific color and holding it
 	02hr figuring out the best way to get my defined pieces to translate well with the Tetris board(might need alterations)
+	05hr score board with nothing in it(not done)
 
 MTG's Summary:
 	Challenge05 was a thought expirament used to plan and strategize the 

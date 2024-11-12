@@ -1,0 +1,21 @@
+Again, so far this project hasn't been too challenging, We had a few bugs to iron out for the movement (Scott is working on it), and I am working on the 
+scoring mechanisms, and finished adding some pizzazz which was giving me a lot of trouble because the timings where tricky to figure out for updating the
+board. Scott is working on the disjoint set portion, which shouldnt take long because it can be referenced easily from the superball lab. Currently the board
+is bucket and pieces can fall and fit together but none go away yet (bc no scoring feature). We should be finished this week, and I met with my partner and 
+he is fixing functonality for the keys and adding disjoint set logic.
+
+MTG's Personal Log:
+	02hr generating project proposal file (50% in lab)
+	02hr familiarization with ncurses
+	01hr Generating potential header files, supporting files, and main
+	01hr Generating MTG's Update1.txt file
+	01hr Generating MTG's Update2.txt file
+	01hr Adding a file to hold all the defined pieces
+	01hr Separating pieces into .c/.h file to make addreability easier
+	03hr Adding a board that shows a piece falling and end game (parital Tetris functionality) (also kinda was temp)
+	06hr Added 4 more hidden rows to the top of the board to give a scrolling inn effect
+	02hr Figuring out colors in ncurses
+	12hr Adding color changing and fixing the timing for the Tetris logo(bc moving the piece down was making the tetris run at differnt speeds), 
+		fixing piece being a specific color and holding it
+	02hr figuring out the best way to get my defined pieces to translate well with the Tetris board(might need alterations)
+	05hr score board with nothing in it(not done)
