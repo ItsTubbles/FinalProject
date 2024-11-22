@@ -14,11 +14,13 @@ struct DisjointSet {
         for (int i = 0; i < n; ++i) parent[i] = i;
     }
 
+    //retruns the parent node
     int find(int x) {
         if (parent[x] != x) parent[x] = find(parent[x]);
         return parent[x];
     }
 
+    //unions two sets
     void unite(int x, int y) {
         int rootX = find(x);
         int rootY = find(y);
@@ -29,6 +31,7 @@ struct DisjointSet {
         }
     }
 
+    //retuns the size aka the depth of the set
     int getSize(int x) {
         return size[find(x)];
     }

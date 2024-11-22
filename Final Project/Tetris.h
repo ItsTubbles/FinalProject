@@ -2,12 +2,14 @@
 #define TETRIS_H
 
 #include <ncurses.h>
-#include <cstdlib>  // For rand() and srand()
-#include <ctime>    // For time() to seed rand()
-#include <unistd.h> // For usleep (to control fall speed)
+#include <cstdlib>
+#include <ctime> 
+#include <unistd.h> 
 #include <map>
 #include <vector>
 #include <functional>
+#include <set>
+#include <fstream>
 #include "Pieces.h"
 
 // Declare board dimensions
@@ -28,23 +30,31 @@ extern int tetroRows, tetroCols;
 extern int colorPair;
 extern char** tetromino;
 extern int rotationIndex;
+extern int currentScore;
+extern int highScore;
 
 // Function declarations
+void loadHighScore();
 void startGame(Cell (&board)[boardRows][boardCols]);
 void initColors();
 void drawBox();
 void printTetrisTitle();
 WINDOW* createNextPieceWindow();
 void showNextPiece(WINDOW* nextPieceWin, char** tetromino, int rows, int cols, int colorPair);
+void createScoreWindows();
+void showCurrentScore();
+void showHighScore();
 void printBoard(Cell board[boardRows][boardCols]);
 void placeTetrominoOnBoard(Cell board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int row, int col, int colorPair);
 void clearTetrominoFromBoard(Cell board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int row, int col);
 bool canMoveDown(Cell board[boardRows][boardCols], char** tetromino, int tetroRows, int tetroCols, int currentRow, int columnStart);
+bool canPlaceTetromino(Cell board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int newRow, int newCol);
+void clearCompletedRows(Cell board[boardRows][boardCols]);
 void quitGame();
 
 // Key controls
-extern std::map<int, std::vector<char**>> rotations;
-extern std::map<int, std::function<void()>> keyActions;
+extern map<int, vector<char**>> rotations;
+extern map<int, function<void()>> keyActions;
 
 // Template to convert any Tetromino array into a pointer-to-pointer
 template <size_t rows, size_t cols>

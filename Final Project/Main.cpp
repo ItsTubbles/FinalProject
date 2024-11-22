@@ -6,7 +6,7 @@ int main() {
     char ch;
 
     // Timing constants for delays
-    const int dropDelay = 750000;    // Delay for fall speed in microseconds
+    const int dropDelay = 750000;    // Delay for fall speed
     const int moveDelay = 50000;     // Delay for side-to-side movement
     const int titleDelay = 200000;   // Delay for title update
     const int setDelayThreshold = 15; // Ticks to delay before setting piece
@@ -20,7 +20,7 @@ int main() {
     startGame(board);
     WINDOW* nextPieceWin = createNextPieceWindow();
 
-    // Choose the initial "next" Tetromino
+    // Choose the initial Tetromino
     char** nextTetromino;
     int nextRows, nextCols, nextColorPair;
     int randomPiece = rand() % 7;
@@ -35,9 +35,10 @@ int main() {
     }
 
     clear();
-    // Main game loop
     while (true) {
         showNextPiece(nextPieceWin, nextTetromino, nextRows, nextCols, nextColorPair);
+        showCurrentScore();
+        showHighScore();
 
         // Set the current Tetromino to the next piece
         tetromino = nextTetromino;
@@ -45,7 +46,7 @@ int main() {
         tetroCols = nextCols;
         colorPair = nextColorPair;
 
-        // Generate a new "next" Tetromino
+        // Generate the actual next Tetromino
         randomPiece = rand() % 7;
         switch (randomPiece) {
             case 0: nextTetromino = convertToPointer(I_0); nextRows = 1; nextCols = 4; nextColorPair = 1; break;
@@ -72,9 +73,11 @@ int main() {
             }
             titleCounter += moveDelay;  // Accumulate title counter with each loop iteration
 
-            mvprintw(1, 0, "w=set      s=down    Shift+a=rotate left");
-            mvprintw(2, 0, "a=left    d=right    Shift+D=rotate right");
+            mvprintw(1, 0, "q=quit    s=down     w=rotate left");
+            mvprintw(2, 0, "a=left    d=right    e=rotate right");
             showNextPiece(nextPieceWin, nextTetromino, nextRows, nextCols, nextColorPair);
+            showCurrentScore();
+            showHighScore();
 
             // Draw the box around the board
             drawBox();
@@ -97,6 +100,8 @@ int main() {
                 // Check if delay threshold is reached before setting the piece
                 if (setDelayCounter >= setDelayThreshold) {
                     placeTetrominoOnBoard(board, tetromino, tetroRows, tetroCols, currentRow, columnStart, colorPair);
+
+                    clearCompletedRows(board);
 
                     // Check for game-over condition at the top row
                     if (currentRow == 0) {
@@ -125,24 +130,26 @@ int main() {
                     clearTetrominoFromBoard(board, tetromino, tetroRows, tetroCols, currentRow, columnStart);
                     keyActions[ch]();  // Execute the corresponding action
                 }
-                if (ch == 'W') { // Quit game if 'W' is pressed
+                if (ch == 'q') { // Quit game if 'q' is pressed
                     gameOver = true;
                 }
             }
         }
 
         if (gameOver) {
-            while ((ch = getch()) != 'W') {
+            while ((ch = getch()) != 'q') {
                 printTetrisTitle();
                 showNextPiece(nextPieceWin, nextTetromino, nextRows, nextCols, nextColorPair);
-                move(13, 10);
+                showCurrentScore();
+                showHighScore();
+                move(13, 11);
                 printw("GAME OVER!");
-                move(14, 4);
-                printw("Press 'Shift+W' to quit");
+                move(14, 7);
+                printw("Press 'q' to quit");
                 refresh();
-                usleep(400000);
+                usleep(titleDelay);
             }
-            quitGame();  // End the game when 'W' is pressed
+            quitGame();  // End the game when 'q' is pressed
             delwin(nextPieceWin); // Delete the next piece window before quitting
         }
     }

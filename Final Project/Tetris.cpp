@@ -1,14 +1,32 @@
 //Tetris.cpp
 #include "Tetris.h"
+#include "DisjointSet.h"
 
 // Define global variables
-Cell board[boardRows][boardCols];
-int columnStart = 0;
-int currentRow = 0;
-int tetroRows = 0, tetroCols = 0;
-int colorPair = 0;
-char** tetromino = nullptr;
-int rotationIndex = 0;
+Cell board[boardRows][boardCols]; // Game board grid
+int columnStart = 0;              // Tetromino start column
+int currentRow = 0;               // Current row position of tetromino
+int tetroRows = 0, tetroCols = 0; // Tetromino dimensions
+int colorPair = 0;                // Color pair ID for tetromino
+char** tetromino = nullptr;       // Pointer to current tetromino shape
+int rotationIndex = 0;            // Current rotation state of tetromino
+int currentScore = 0;             // Player's current score
+int highScore = 0;                // High score to beat
+WINDOW* scoreWin;                 // Window for displaying current score
+WINDOW* highScoreWin;             // Window for displaying high score
+
+
+//Load high score 
+void loadHighScore() {
+    ifstream highScoreFile("highscore.txt");
+    if (highScoreFile.is_open()) {
+        highScoreFile >> highScore;
+        highScoreFile.close();
+    } 
+    else {
+        highScore = 0; 
+    }
+}
 
 // Function to start the game and initialize the board
 void startGame(Cell (&board)[boardRows][boardCols]) {
@@ -28,25 +46,34 @@ void startGame(Cell (&board)[boardRows][boardCols]) {
         }
     }
 
+    loadHighScore();       // Load high score from file
+    createScoreWindows();  // Initialize score windows
+
     // Print command instructions above the board
     printTetrisTitle();
-    mvprintw(1, 0, "w=set      s=down    Shift+a=rotate left");
-    mvprintw(2, 0, "a=left    d=right    Shift+D=rotate right");
+    mvprintw(1, 0, "q=quit    s=down     w=rotate left");
+    mvprintw(2, 0, "a=left    d=right    e=rotate right");
     drawBox();
     printBoard(board);
     refresh();  // Ensure stdscr updates
 
     int ch;
-    while ((ch = getch()) != 'S') {
-        if (ch == 'W') quitGame();
+    while ((ch = getch()) != 's') {
+        if (ch == 'q') quitGame();
         printTetrisTitle();
-        move(14, 3);
-        printw("Press 'Shift+S' to start");
+        move(14, 7);
+        printw("Press 's' to start");
         refresh();
+        createScoreWindows();  // Initialize score windows
+
+        // Show initial scores
+        showCurrentScore();
+        showHighScore();
         usleep(200000);
     }
 }
 
+//initializes the color mechanisms
 void initColors() {
     start_color(); // Start color functionality
 
@@ -80,6 +107,7 @@ void drawBox() {
     printw("+");
 }
 
+//function to print the board
 void printBoard(Cell board[boardRows][boardCols]) {
     for (int i = 4; i < boardRows; i++) {
         for (int j = 0; j < boardCols; j++) {
@@ -135,6 +163,43 @@ void showNextPiece(WINDOW* nextPieceWin, char** tetromino, int rows, int cols, i
     wrefresh(nextPieceWin); // Refresh the next piece window to display changes
 }
 
+// Function to create and initialize score windows
+void createScoreWindows() {
+    int startX = boardCols * 3 + 3;
+    int startY = 4;
+
+    // Create current score window
+    scoreWin = newwin(3, 15, startY + 8, startX);
+    box(scoreWin, 0, 0);
+    mvwprintw(scoreWin, 0, 1, "Score");
+    wrefresh(scoreWin);
+
+    // Create high score window
+    highScoreWin = newwin(3, 15, startY + 12, startX);
+    box(highScoreWin, 0, 0);
+    mvwprintw(highScoreWin, 0, 1, "High Score");
+    wrefresh(highScoreWin);
+}
+
+// Function to update the current score display
+void showCurrentScore() {
+    werase(scoreWin);
+    box(scoreWin, 0, 0);
+    mvwprintw(scoreWin, 0, 1, "Score");
+    mvwprintw(scoreWin, 1, 1, "%d", currentScore);
+    wrefresh(scoreWin);
+}
+
+// Function to update the high score display
+void showHighScore() {
+    werase(highScoreWin);
+    box(highScoreWin, 0, 0);
+    mvwprintw(highScoreWin, 0, 1, "High Score");
+    mvwprintw(highScoreWin, 1, 1, "%d", highScore);
+    wrefresh(highScoreWin);
+}
+
+//Places the piece on the board
 void placeTetrominoOnBoard(Cell board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int row, int col, int colorPair) {
     for (int i = 0; i < tetroRows; i++) {
         for (int j = 0; j < tetroCols; j++) {
@@ -146,6 +211,7 @@ void placeTetrominoOnBoard(Cell board[boardRows][boardCols], char **tetromino, i
     }
 }
 
+//clears the piece off the board
 void clearTetrominoFromBoard(Cell board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int row, int col) {
     for (int i = 0; i < tetroRows; i++) {
         for (int j = 0; j < tetroCols; j++) {
@@ -156,6 +222,7 @@ void clearTetrominoFromBoard(Cell board[boardRows][boardCols], char **tetromino,
     }
 }
 
+//prints the tetris title with cool colors
 void printTetrisTitle() {
     const char* title = "TETRIS!";
     for (int i = 0; title[i] != '\0'; ++i) {
@@ -167,6 +234,7 @@ void printTetrisTitle() {
     refresh();
 }
 
+//Checks to see if a piece can move down
 bool canMoveDown(Cell board[boardRows][boardCols], char** tetromino, int tetroRows, int tetroCols, int currentRow, int columnStart) {
     for (int i = 0; i < tetroRows; i++) {
         for (int j = 0; j < tetroCols; j++) {
@@ -184,10 +252,84 @@ bool canMoveDown(Cell board[boardRows][boardCols], char** tetromino, int tetroRo
     return true;
 }
 
+// Function to check if the tetromino can be placed at a new position
+bool canPlaceTetromino(Cell board[boardRows][boardCols], char **tetromino, int tetroRows, int tetroCols, int newRow, int newCol) {
+    for (int i = 0; i < tetroRows; i++) {
+        for (int j = 0; j < tetroCols; j++) {
+            if (tetromino[i][j] != ' ' && (newRow + i >= boardRows || newCol + j < 0 || newCol + j >= boardCols || board[newRow + i][newCol + j].piece != '.')) {
+                return false;  // Out of bounds or collision detected
+            }
+        }
+    }
+    return true;
+}
+
+//Scores filled rows
+void clearCompletedRows(Cell board[boardRows][boardCols]) {
+    int completedCount = 0;
+    for (int row = boardRows - 1; row >= 0; --row) {
+        DisjointSet ds(boardCols);
+        bool rowComplete = true;
+        bool rowEmpty = true;
+
+        for (int col = 0; col < boardCols; ++col) {
+            if (board[row][col].piece == 'X') {
+                rowEmpty = false;  // Mark as not empty if any cell is filled
+                if (col > 0 && board[row][col - 1].piece == 'X') {
+                    ds.unite(col, col - 1);  // Union adjacent filled cells
+                }
+            } 
+            else {
+                rowComplete = false;  // Mark as incomplete if any cell is empty
+            }
+        }
+
+        // Stop checking further if row is entirely empty
+        if (rowEmpty) break;
+
+        // If row is complete, clear it and shift all rows above down
+        if (rowComplete && ds.getSize(0) == boardCols) {
+            // Clear the row
+            for (int col = 0; col < boardCols; ++col) {
+                board[row][col].piece = '.';
+            }
+
+            // Shift rows above down by one
+            for (int r = row; r > 0; --r) {
+                for (int c = 0; c < boardCols; ++c) {
+                    board[r][c] = board[r - 1][c];
+                }
+            }
+
+            // Reset the top row to empty after shifting
+            for (int col = 0; col < boardCols; ++col) {
+                board[0][col].piece = '.';
+            }
+
+            // Re-check the current row after shifting
+            row++;  // Increment row to re-check this position after shift
+            completedCount++;
+        }
+    }
+    currentScore += completedCount * completedCount * 10;
+    if (currentScore > highScore){
+        highScore = currentScore;
+
+        // Overwrite high score with current score to highscore.txt
+        ofstream highScoreFile("highscore.txt");
+        if (highScoreFile.is_open()) {
+            highScoreFile << highScore;
+            highScoreFile.close();
+        }
+    }
+}
+
+//Quit the game
 void quitGame() {
     endwin();  // End ncurses mode
     exit(0);   // Exit the program cleanly
 }
+
 // Define the rotations map explicitly
 map<int, vector<char**>> rotations = {
     {1, {convertToPointer(I_0), convertToPointer(I_90)}},
@@ -199,6 +341,7 @@ map<int, vector<char**>> rotations = {
 };
 
 // Define movement and rotation actions using lambda functions with explicit types
+//function to move left
 function<void()> moveLeft = [&]() {
     if (canPlaceTetromino(board, tetromino, tetroRows, tetroCols, currentRow, columnStart - 1)) {
         clearTetrominoFromBoard(board, tetromino, tetroRows, tetroCols, currentRow, columnStart);
@@ -207,6 +350,7 @@ function<void()> moveLeft = [&]() {
     }
 };
 
+//function to move right
 function<void()> moveRight = [&]() {
     if (canPlaceTetromino(board, tetromino, tetroRows, tetroCols, currentRow, columnStart + 1)) {
         clearTetrominoFromBoard(board, tetromino, tetroRows, tetroCols, currentRow, columnStart);
@@ -215,10 +359,12 @@ function<void()> moveRight = [&]() {
     }
 };
 
+//function to speed up the fall
 function<void()> moveDown = [&]() {
     if (canMoveDown(board, tetromino, tetroRows, tetroCols, currentRow, columnStart)) currentRow++;
 };
 
+//function to rotate the piece to the right
 function<void()> rotateRight = [&]() {
     if (rotations[colorPair].size() > 1) {  // Rotate only if multiple rotations are defined
         rotationIndex = (rotationIndex + 1) % rotations[colorPair].size();
@@ -252,6 +398,7 @@ function<void()> rotateRight = [&]() {
     }
 };
 
+//function to rotate the piece to the left
 function<void()> rotateLeft = [&]() {
     if (rotations[colorPair].size() > 1) {  // Rotate only if multiple rotations are defined
         rotationIndex = (rotationIndex - 1 + rotations[colorPair].size()) % rotations[colorPair].size();
@@ -292,6 +439,6 @@ map<int, function<void()>> keyActions = {
     {'a', moveLeft},
     {'d', moveRight},
     {'s', moveDown},
-    {'A', rotateLeft}, // Shift + a for left rotation
-    {'D', rotateRight} // Shift + d for right rotation
+    {'w', rotateLeft}, 
+    {'e', rotateRight} 
 };
