@@ -42,6 +42,9 @@ MTG's Personal Log:
 		fixing piece being a specific color and holding it
 	02hr figuring out the best way to get my defined pieces to translate well with the Tetris board(might need alterations)
 	05hr score board with nothing in it(not done)
+	06hr high score/current score boxes with updates
+	06hr scoring mechanics and shifting down after
+total time 50 hrs.
 
 MTG's Summary:
 	Challenge05 was a thought expirament used to plan and strategize the 
