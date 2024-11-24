@@ -1,5 +1,16 @@
 10/22 first team meeting to divide out the first set of tasks 10-15min
+	-Michael tasked with interface
+	-Scott tasked with controls
 10/30 progress update from each of us along with future task divison 15-20min
+	-Michael tasked with updating interface
+	-Scott tasked with fixing control bugs
 11/12 progress update 15-20min
+	-Michael tasked with scoring mechanisms
+	-Scott tasked with disjoint sets
 11/18 progress update along with presentation meetup 20-30min
+	-went over slides and who gets what slide
 11/24 final meet before presentation to the TA's
+	-confirmed that the final project is working
+	-discovered two minor bugs
+		-rotations delete pieces
+		-(VERY RARE) rotations can imprint on opposite side of board when rotating
