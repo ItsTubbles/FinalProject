@@ -1,6 +1,6 @@
 Git link: https://github.com/ItsTubbles/FinalProject/tree/main/Final%20Project
-compile: g++ -o ncurses Main.cpp -lncurses
-run: ./ncurses
+compile: make
+run: ./tetris
 
 Project intent: 
 	The intent of the following project is to create a console based game
@@ -44,7 +44,8 @@ MTG's Personal Log:
 	05hr score board with nothing in it(not done)
 	06hr high score/current score boxes with updates
 	06hr scoring mechanics and shifting down after
-total time 50 hrs.
+	02hr team meetings
+total time 52 hrs.
 
 MTG's Summary:
 	Challenge05 was a thought expirament used to plan and strategize the 
