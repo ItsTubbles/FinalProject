@@ -1,0 +1,15 @@
+We have almost completed the project now. There are just a few bugs left to iron out but I think we will definitely be ready for presentation day. Since the last update, I have worked on the slides presented 
+in class as well as debugging the movement/rotation code. Currently, there exists 2 bugs that we are aware of. The first is that rotation of a piece that would cause the active piece to overlap with pieces
+already on the board will delete the piece already on the board. Also, if you rotate a piece such that any part of that piece would go out of the left/right bounds, the section of the piece that would go out of bounds 
+imprints on the other side of the board, placing it at that position.
+
+SCG's Personal Log
+4hr getting acquainted with nCurses library 
+1hr generating this file 
+1hr familiarization with Github
+4hr implementation of directional movement
+3hr Bug fixing with directional movement
+4hr implementation of the disjoint sets
+2hr slides creation
+1hr testing and bug hunting
+3hr debugging rotation/movement 
